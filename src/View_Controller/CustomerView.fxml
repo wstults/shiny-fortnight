@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="481.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentsViewController">
+   <children>
+      <TableView layoutX="59.0" layoutY="82.0" prefHeight="284.0" prefWidth="349.0">
+        <columns>
+          <TableColumn prefWidth="72.0" text="Cust ID" />
+          <TableColumn prefWidth="276.0" text="Customer Name" />
+        </columns>
+      </TableView>
+      <Label layoutX="189.0" layoutY="35.0" text="Customers">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="59.0" layoutY="389.0" mnemonicParsing="false" text="Add Customer" />
+      <Button layoutX="364.0" layoutY="430.0" mnemonicParsing="false" text="Close" />
+      <Button layoutX="274.0" layoutY="389.0" mnemonicParsing="false" text="View Customer Details" />
+      <Button layoutX="167.0" layoutY="389.0" mnemonicParsing="false" text="Edit Customer" />
+   </children>
+</AnchorPane>
