@@ -5,16 +5,16 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import view_controller.*?>
+<?import View_Controller.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentsViewController">
    <children>
-      <TableView layoutX="130.0" layoutY="146.0" prefHeight="284.0" prefWidth="686.0">
+      <TableView fx:id="appointmentsTable" layoutX="130.0" layoutY="146.0" prefHeight="284.0" prefWidth="686.0">
         <columns>
-            <TableColumn prefWidth="52.0" text="Appt ID">
+            <TableColumn fx:id="apptIDColumn" prefWidth="52.0" text="Appt ID">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
@@ -22,7 +22,7 @@
                     <PropertyValueFactory property="ApptID" />
                 </cellValueFactory>
             </TableColumn>
-          <TableColumn prefWidth="64.0" text="Date" >
+          <TableColumn fx:id="dateColumn" prefWidth="64.0" text="Date">
               <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
@@ -30,7 +30,7 @@
                     <PropertyValueFactory property="Date" />
                 </cellValueFactory>
           </TableColumn>
-            <TableColumn prefWidth="132.0" text="Customer" >
+            <TableColumn fx:id="customerColumn" prefWidth="132.0" text="Customer">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
@@ -38,7 +38,7 @@
                     <PropertyValueFactory property="Customer" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="237.0" text="Type" >
+            <TableColumn fx:id="typeColumn" prefWidth="237.0" text="Type">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
@@ -46,7 +46,7 @@
                     <PropertyValueFactory property="Type" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="101.0" text="Start Time" >
+            <TableColumn fx:id="startTimeColumn" prefWidth="101.0" text="Start Time">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
@@ -54,7 +54,7 @@
                     <PropertyValueFactory property="StartTime" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="99.0" text="End Time" >
+            <TableColumn fx:id="endTimeColumn" prefWidth="99.0" text="End Time">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
@@ -69,12 +69,13 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <RadioButton layoutX="201.0" layoutY="50.0" mnemonicParsing="false" selected="true" text="This Week" />
-      <RadioButton layoutX="291.0" layoutY="50.0" mnemonicParsing="false" text="This Month" />
-      <Button layoutX="626.0" layoutY="46.0" mnemonicParsing="false" text="Customers" />
-      <Button layoutX="739.0" layoutY="46.0" mnemonicParsing="false" text="Reports" />
-      <Button layoutX="533.0" layoutY="455.0" mnemonicParsing="false" text="Edit Appointment" />
-      <Button layoutX="860.0" layoutY="467.0" mnemonicParsing="false" text="Exit" />
-      <Button layoutX="662.0" layoutY="454.0" mnemonicParsing="false" text="View Appointment Details" />
+      <RadioButton fx:id="weekRadio" layoutX="201.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleWeek" selected="true" text="This Week" />
+      <RadioButton fx:id="monthRadio" layoutX="291.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleMonth" text="This Month" />
+      <Button fx:id="customersButton" layoutX="626.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleCustomers" text="Customers" />
+      <Button fx:id="reportsButton" layoutX="739.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleReports" text="Reports" />
+      <Button fx:id="editAppointmentButton" layoutX="533.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleEdit" text="Edit Appointment" />
+      <Button fx:id="exitButton" layoutX="860.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+      <Button fx:id="viewAppointmentButton" layoutX="662.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleView" text="View Appointment Details" />
+      <Button fx:id="registerButton" layoutX="58.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleRegister" text="Register New User" />
    </children>
 </AnchorPane>

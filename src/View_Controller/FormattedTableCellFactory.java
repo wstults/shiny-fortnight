@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view_controller;
+package View_Controller;
 
 import java.text.Format;
 import javafx.geometry.Pos;
