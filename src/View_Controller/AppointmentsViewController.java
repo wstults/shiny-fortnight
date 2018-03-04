@@ -61,12 +61,22 @@ public class AppointmentsViewController {
     private Button registerButton;
 
     @FXML
-    void handleCustomers(ActionEvent event) {
+    void handleCustomers(ActionEvent event) throws IOException {
+        Parent customerViewParent = FXMLLoader.load(getClass().getResource("CustomerView.fxml"));
+        Scene customerViewScene = new Scene(customerViewParent);
+        Stage customerViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        customerViewStage.setScene(customerViewScene);
+        customerViewStage.show();
 
     }
 
     @FXML
-    void handleEdit(ActionEvent event) {
+    void handleEdit(ActionEvent event) throws IOException {
+        Parent appointmentEditViewParent = FXMLLoader.load(getClass().getResource("AppointmentEditView.fxml"));
+        Scene appointmentEditViewScene = new Scene(appointmentEditViewParent);
+        Stage appointmentEditViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appointmentEditViewStage.setScene(appointmentEditViewScene);
+        appointmentEditViewStage.show();
 
     }
 
@@ -91,12 +101,22 @@ public class AppointmentsViewController {
     }
 
     @FXML
-    void handleReports(ActionEvent event) {
+    void handleReports(ActionEvent event) throws IOException {
+        Parent reportsViewParent = FXMLLoader.load(getClass().getResource("ReportsView.fxml"));
+        Scene reportsViewScene = new Scene(reportsViewParent);
+        Stage reportsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        reportsViewStage.setScene(reportsViewScene);
+        reportsViewStage.show();
 
     }
 
     @FXML
-    void handleView(ActionEvent event) {
+    void handleView(ActionEvent event) throws IOException {
+        Parent appointementDetailViewParent = FXMLLoader.load(getClass().getResource("AppointmentDetailView.fxml"));
+        Scene appointementDetailViewScene = new Scene(appointementDetailViewParent);
+        Stage appointementDetailViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appointementDetailViewStage.setScene(appointementDetailViewScene);
+        appointementDetailViewStage.show();
 
     }
 

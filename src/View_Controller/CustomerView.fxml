@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="481.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentsViewController">
+<AnchorPane id="AnchorPane" prefHeight="481.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.CustomerViewController">
    <children>
-      <TableView layoutX="59.0" layoutY="82.0" prefHeight="284.0" prefWidth="349.0">
+      <TableView fx:id="customersTable" layoutX="59.0" layoutY="82.0" prefHeight="284.0" prefWidth="349.0">
         <columns>
-          <TableColumn prefWidth="72.0" text="Cust ID" />
-          <TableColumn prefWidth="276.0" text="Customer Name" />
+          <TableColumn fx:id="customerIDColumn" prefWidth="72.0" text="Cust ID" />
+          <TableColumn fx:id="customerNameColumn" prefWidth="276.0" text="Customer Name" />
         </columns>
       </TableView>
       <Label layoutX="189.0" layoutY="35.0" text="Customers">
@@ -20,9 +20,9 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="59.0" layoutY="389.0" mnemonicParsing="false" text="Add Customer" />
-      <Button layoutX="364.0" layoutY="430.0" mnemonicParsing="false" text="Close" />
-      <Button layoutX="274.0" layoutY="389.0" mnemonicParsing="false" text="View Customer Details" />
-      <Button layoutX="167.0" layoutY="389.0" mnemonicParsing="false" text="Edit Customer" />
+      <Button fx:id="addCustomerButton" layoutX="59.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleAddCustomer" text="Add Customer" />
+      <Button fx:id="closeButton" layoutX="364.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
+      <Button fx:id="viewCustomerButton" layoutX="274.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleViewCustomer" text="View Customer Details" />
+      <Button fx:id="editCustomerButton" layoutX="167.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleEditCustomer" text="Edit Customer" />
    </children>
 </AnchorPane>

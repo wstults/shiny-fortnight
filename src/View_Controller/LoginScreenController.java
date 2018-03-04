@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 public class LoginScreenController {
     
-    public String currentUser;
+    public static String currentUser;
     static Stage stage;
 
     @FXML
@@ -68,7 +68,7 @@ public class LoginScreenController {
                 String password = rs.getString("password");
                 
                 if (password.equals(passwordField.getText())) {
-                    
+                    currentUser = usernameField.getText();
                     Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
                     Scene appointmentsViewScene = new Scene(appointmentsViewParent);
                     Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
