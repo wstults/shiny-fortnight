@@ -1,6 +1,11 @@
 package View_Controller;
 
+import Model.Appointment;
+import static Model.Appointment.data;
+import Model.Database;
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,29 +17,34 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import java.sql.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AppointmentsViewController {
+    
+    private Database objDbClass;
+    private Connection con;
+    private ObservableList<Appointment> data;
+    //private MainApp mainApp;
 
     @FXML
-    private TableView<?> appointmentsTable;
+    private TableView<Appointment> appointmentsTable;
 
     @FXML
-    private TableColumn<?, ?> apptIDColumn;
+    private TableColumn<Appointment, String> apptIDColumn;
 
     @FXML
-    private TableColumn<?, ?> dateColumn;
+    private TableColumn<Appointment, String> customerColumn;
 
     @FXML
-    private TableColumn<?, ?> customerColumn;
+    private TableColumn<Appointment, String> typeColumn;
 
     @FXML
-    private TableColumn<?, ?> typeColumn;
+    private TableColumn<Appointment, String> startTimeColumn;
 
     @FXML
-    private TableColumn<?, ?> startTimeColumn;
-
-    @FXML
-    private TableColumn<?, ?> endTimeColumn;
+    private TableColumn<Appointment, String> endTimeColumn;
 
     @FXML
     private RadioButton weekRadio;
@@ -59,6 +69,45 @@ public class AppointmentsViewController {
 
     @FXML
     private Button registerButton;
+    
+    public void buildData() throws SQLException, ClassNotFoundException {
+        data = FXCollections.observableArrayList();
+        objDbClass = new Database();
+        con = objDbClass.getConnection();
+        try {
+            String SQL = "SELECT appointment.appointmentid, customer.customerName, appointment.description, appointment.start, appointment.end FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId ORDER BY start";
+            ResultSet rs = con.createStatement().executeQuery(SQL);
+            while(rs.next()) {
+                Appointment ap;
+                ap = new Appointment();
+                ap.setAppointmentID(rs.getString("appointmentid"));
+                
+                ap.setCustomerID(rs.getString("customerName"));
+                ap.setDescription(rs.getString("description"));
+                ap.setStart(rs.getString("start"));
+                ap.setEnd(rs.getString("end"));
+                data.add(ap);
+                System.out.println((rs.getString("appointmentid")) + " " + (rs.getString("customerName")) + " " + (rs.getString("description")) + " " + (rs.getString("start")) + " " + (rs.getString("end")));
+                
+            }
+            appointmentsTable.setItems(data);
+        } catch(Exception e) {
+        }
+    }
+    
+    
+    @FXML
+    private void initialize() throws SQLException, ClassNotFoundException {
+        apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("Appointmentid"));
+        customerColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("End"));
+        buildData();
+        
+    }
+    
+    
 
     @FXML
     void handleCustomers(ActionEvent event) throws IOException {
@@ -124,5 +173,11 @@ public class AppointmentsViewController {
     void handleWeek(ActionEvent event) {
 
     }
+    
+    //public void setMainApp(MainApp mainApp) {
+    //    this.mainApp = mainApp;
+    //    appointmentsTable.setItems(data);
+        
+    //}
 
 }

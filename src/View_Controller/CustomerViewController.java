@@ -1,6 +1,8 @@
 package View_Controller;
 
+import Model.Customer;
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,12 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class CustomerViewController {
 
     @FXML
-    private TableView<?> customersTable;
+    private TableView<Customer> customersTable;
 
     @FXML
     private TableColumn<?, ?> customerIDColumn;
@@ -34,6 +37,15 @@ public class CustomerViewController {
 
     @FXML
     private Button editCustomerButton;
+    
+    @FXML
+    private void initialize() throws SQLException, ClassNotFoundException {
+    customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerid"));
+    customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+    Customer.buildData();
+    customersTable.setItems(Customer.data);
+    }
+    
 
     @FXML
     void handleAddCustomer(ActionEvent event) throws IOException {

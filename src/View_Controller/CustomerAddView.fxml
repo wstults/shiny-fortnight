@@ -18,19 +18,17 @@
       <Label layoutX="65.0" layoutY="123.0" text="Address Line 1" />
       <Label layoutX="65.0" layoutY="151.0" text="Address Line 2" />
       <Label layoutX="70.0" layoutY="183.0" text="City" />
-      <Label layoutX="67.0" layoutY="212.0" text="State" />
-      <Label layoutX="64.0" layoutY="244.0" text="Zip Code" />
-      <Label layoutX="64.0" layoutY="306.0" text="Phone Number" />
+      <Label layoutX="65.0" layoutY="214.0" text="Zip Code" />
+      <Label layoutX="64.0" layoutY="276.0" text="Phone Number" />
       <TextField fx:id="nameField" layoutX="226.0" layoutY="88.0" prefHeight="25.0" prefWidth="322.0" />
       <TextField fx:id="addressOneField" layoutX="226.0" layoutY="119.0" prefHeight="25.0" prefWidth="322.0" />
       <TextField fx:id="addressTwoField" layoutX="226.0" layoutY="147.0" prefHeight="25.0" prefWidth="322.0" />
       <TextField fx:id="cityField" layoutX="226.0" layoutY="179.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField fx:id="stateField" layoutX="226.0" layoutY="208.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField fx:id="zipCodeField" layoutX="226.0" layoutY="240.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField fx:id="phoneNumberField" layoutX="226.0" layoutY="302.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="zipCodeField" layoutX="226.0" layoutY="210.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="phoneNumberField" layoutX="226.0" layoutY="272.0" prefHeight="25.0" prefWidth="322.0" />
       <Button fx:id="saveButton" layoutX="419.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
       <Button fx:id="closeButton" layoutX="495.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
-      <Label layoutX="67.0" layoutY="275.0" text="Country" />
-      <ChoiceBox fx:id="countryBox" layoutX="225.0" layoutY="271.0" prefHeight="25.0" prefWidth="104.0" />
+      <Label layoutX="68.0" layoutY="246.0" text="Country" />
+      <ChoiceBox fx:id="countryBox" layoutX="226.0" layoutY="242.0" prefHeight="25.0" prefWidth="104.0" />
    </children>
 </AnchorPane>

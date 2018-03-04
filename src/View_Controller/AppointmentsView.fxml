@@ -9,57 +9,51 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import View_Controller.*?>
+<?import Model.*?>
+
 
 <AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentsViewController">
    <children>
-      <TableView fx:id="appointmentsTable" layoutX="130.0" layoutY="146.0" prefHeight="284.0" prefWidth="686.0">
+      <TableView fx:id="appointmentsTable" layoutX="56.0" layoutY="146.0" prefHeight="284.0" prefWidth="839.0">
         <columns>
             <TableColumn fx:id="apptIDColumn" prefWidth="52.0" text="Appt ID">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
                 <cellValueFactory>
-                    <PropertyValueFactory property="ApptID" />
+                    <PropertyValueFactory property="Appointmentid" />
                 </cellValueFactory>
             </TableColumn>
-          <TableColumn fx:id="dateColumn" prefWidth="64.0" text="Date">
-              <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="Date" />
-                </cellValueFactory>
-          </TableColumn>
-            <TableColumn fx:id="customerColumn" prefWidth="132.0" text="Customer">
+            <TableColumn fx:id="customerColumn" prefWidth="155.0" text="Customer">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
                 <cellValueFactory>
-                    <PropertyValueFactory property="Customer" />
+                    <PropertyValueFactory property="CustomerId" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="typeColumn" prefWidth="237.0" text="Type">
+            <TableColumn fx:id="typeColumn" prefWidth="221.0" text="Type">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
                 <cellValueFactory>
-                    <PropertyValueFactory property="Type" />
+                    <PropertyValueFactory property="Description" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="startTimeColumn" prefWidth="101.0" text="Start Time">
+            <TableColumn fx:id="startTimeColumn" prefWidth="202.0" text="Start Time">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
                 <cellValueFactory>
-                    <PropertyValueFactory property="StartTime" />
+                    <PropertyValueFactory property="Start" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="endTimeColumn" prefWidth="99.0" text="End Time">
+            <TableColumn fx:id="endTimeColumn" prefWidth="208.0" text="End Time">
                 <cellFactory>
                     <FormattedTableCellFactory alignment="CENTER" />
                 </cellFactory>
                 <cellValueFactory>
-                    <PropertyValueFactory property="EndTime" />
+                    <PropertyValueFactory property="End" />
                 </cellValueFactory>
             </TableColumn>
         </columns>
