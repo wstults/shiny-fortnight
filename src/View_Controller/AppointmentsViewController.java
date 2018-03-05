@@ -26,6 +26,7 @@ public class AppointmentsViewController {
     private Database objDbClass;
     private Connection con;
     private ObservableList<Appointment> data;
+    public static String selectedAppointmentID;
     //private MainApp mainApp;
 
     @FXML
@@ -92,6 +93,7 @@ public class AppointmentsViewController {
             }
             appointmentsTable.setItems(data);
         } catch(Exception e) {
+            e.printStackTrace();
         }
     }
     
@@ -121,6 +123,10 @@ public class AppointmentsViewController {
 
     @FXML
     void handleEdit(ActionEvent event) throws IOException {
+        if (appointmentsTable.getSelectionModel().getSelectedItem() != null) {
+            Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
+            selectedAppointmentID = apptIDColumn.getText();
+        }
         Parent appointmentEditViewParent = FXMLLoader.load(getClass().getResource("AppointmentEditView.fxml"));
         Scene appointmentEditViewScene = new Scene(appointmentEditViewParent);
         Stage appointmentEditViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -161,6 +167,10 @@ public class AppointmentsViewController {
 
     @FXML
     void handleView(ActionEvent event) throws IOException {
+        if (appointmentsTable.getSelectionModel().getSelectedItem() != null) {
+            Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
+            selectedAppointmentID = apptIDColumn.getText();
+        }
         Parent appointementDetailViewParent = FXMLLoader.load(getClass().getResource("AppointmentDetailView.fxml"));
         Scene appointementDetailViewScene = new Scene(appointementDetailViewParent);
         Stage appointementDetailViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
