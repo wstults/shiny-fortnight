@@ -13,17 +13,17 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="119.0" layoutY="355.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="220.0" layoutY="355.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="saveButton" layoutX="119.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
+      <Button fx:id="cancelButton" layoutX="220.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
       <Label layoutX="91.0" layoutY="94.0" text="Customer" />
       <Label layoutX="91.0" layoutY="146.0" text="Type" />
       <Label layoutX="91.0" layoutY="204.0" text="Date" />
       <Label layoutX="91.0" layoutY="262.0" text="Start Time" />
       <Label layoutX="91.0" layoutY="311.0" text="End Time" />
-      <TextField editable="false" layoutX="172.0" layoutY="90.0" />
-      <TextField layoutX="172.0" layoutY="142.0" />
-      <TextField layoutX="172.0" layoutY="200.0" />
-      <TextField layoutX="172.0" layoutY="258.0" />
-      <TextField layoutX="172.0" layoutY="307.0" />
+      <TextField fx:id="customerField" layoutX="172.0" layoutY="90.0" />
+      <TextField fx:id="typeField" layoutX="172.0" layoutY="142.0" />
+      <TextField fx:id="dateField" layoutX="172.0" layoutY="200.0" />
+      <TextField fx:id="startField" layoutX="172.0" layoutY="258.0" />
+      <TextField fx:id="endField" layoutX="172.0" layoutY="307.0" />
    </children>
 </AnchorPane>

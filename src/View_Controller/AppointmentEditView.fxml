@@ -6,24 +6,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentAddViewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentEditViewController">
    <children>
       <Label layoutX="119.0" layoutY="30.0" text="Edit Appointment">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="119.0" layoutY="355.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="220.0" layoutY="355.0" mnemonicParsing="false" text="Cancel" />
-      <Label layoutX="91.0" layoutY="94.0" text="Customer" />
-      <Label layoutX="91.0" layoutY="146.0" text="Type" />
-      <Label layoutX="91.0" layoutY="204.0" text="Date" />
-      <Label layoutX="91.0" layoutY="262.0" text="Start Time" />
-      <Label layoutX="91.0" layoutY="311.0" text="End Time" />
-      <TextField editable="false" layoutX="172.0" layoutY="90.0" />
-      <TextField layoutX="172.0" layoutY="142.0" />
-      <TextField layoutX="172.0" layoutY="200.0" />
-      <TextField layoutX="172.0" layoutY="258.0" />
-      <TextField layoutX="172.0" layoutY="307.0" />
+      <Button fx:id="saveButton" layoutX="119.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
+      <Button fx:id="cancelButton" layoutX="220.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+      <Label layoutX="90.0" layoutY="130.0" text="Customer" />
+      <Label layoutX="91.0" layoutY="167.0" text="Type" />
+      <Label layoutX="90.0" layoutY="217.0" text="Consultant" />
+      <Label layoutX="91.0" layoutY="262.0" text="Start" />
+      <Label layoutX="91.0" layoutY="311.0" text="End" />
+      <TextField fx:id="customerField" editable="false" layoutX="172.0" layoutY="126.0" />
+      <TextField fx:id="typeField" layoutX="172.0" layoutY="163.0" />
+      <TextField fx:id="consultantField" layoutX="172.0" layoutY="213.0" />
+      <TextField fx:id="startField" layoutX="172.0" layoutY="258.0" />
+      <TextField fx:id="endField" layoutX="172.0" layoutY="307.0" />
+      <Label layoutX="90.0" layoutY="86.0" text="Appt ID" />
+      <TextField fx:id="appointmentIDField" editable="false" layoutX="172.0" layoutY="82.0" />
    </children>
 </AnchorPane>

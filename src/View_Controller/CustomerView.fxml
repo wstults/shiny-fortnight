@@ -4,31 +4,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import Model.*?>
 <?import View_Controller.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <AnchorPane id="AnchorPane" prefHeight="481.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.CustomerViewController">
    <children>
       <TableView fx:id="customersTable" layoutX="59.0" layoutY="82.0" prefHeight="284.0" prefWidth="349.0">
         <columns>
             <TableColumn fx:id="customerIDColumn" prefWidth="72.0" text="Cust ID">
-                <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="CustomerID" />
-                </cellValueFactory>
+                
             </TableColumn> 
             <TableColumn fx:id="customerNameColumn" prefWidth="276.0" text="Customer Name">
-                <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="CustomerName" />
-                </cellValueFactory>
+                
             </TableColumn>
         </columns>
       </TableView>
@@ -41,5 +30,6 @@
       <Button fx:id="closeButton" layoutX="364.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
       <Button fx:id="viewCustomerButton" layoutX="274.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleViewCustomer" text="View Customer Details" />
       <Button fx:id="editCustomerButton" layoutX="167.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleEditCustomer" text="Edit Customer" />
+      <Button fx:id="scheduleButton" layoutX="106.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleSchedule" text="Schedule An Appointment" />
    </children>
 </AnchorPane>

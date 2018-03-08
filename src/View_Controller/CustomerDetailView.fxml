@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.CustomerAddViewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.CustomerDetailViewController">
    <children>
       <Label layoutX="239.0" layoutY="34.0" text="Customer Details">
          <font>
@@ -17,16 +17,16 @@
       <Label layoutX="65.0" layoutY="123.0" text="Address Line 1" />
       <Label layoutX="65.0" layoutY="151.0" text="Address Line 2" />
       <Label layoutX="70.0" layoutY="183.0" text="City" />
-      <Label layoutX="67.0" layoutY="212.0" text="State" />
+      <Label layoutX="67.0" layoutY="212.0" text="Country" />
       <Label layoutX="64.0" layoutY="244.0" text="Zip Code" />
       <Label layoutX="64.0" layoutY="276.0" text="Phone Number" />
-      <TextField editable="false" layoutX="226.0" layoutY="88.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField editable="false" layoutX="226.0" layoutY="119.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField editable="false" layoutX="226.0" layoutY="147.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField editable="false" layoutX="226.0" layoutY="179.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField editable="false" layoutX="226.0" layoutY="208.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField editable="false" layoutX="226.0" layoutY="240.0" prefHeight="25.0" prefWidth="322.0" />
-      <TextField editable="false" layoutX="226.0" layoutY="272.0" prefHeight="25.0" prefWidth="322.0" />
-      <Button layoutX="496.0" layoutY="325.0" mnemonicParsing="false" text="Close" />
+      <TextField fx:id="nameField" editable="false" layoutX="226.0" layoutY="88.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="addressOneField" editable="false" layoutX="226.0" layoutY="119.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="addressTwoField" editable="false" layoutX="226.0" layoutY="147.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="cityField" editable="false" layoutX="226.0" layoutY="179.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="countryField" editable="false" layoutX="226.0" layoutY="208.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="zipCodeField" editable="false" layoutX="226.0" layoutY="240.0" prefHeight="25.0" prefWidth="322.0" />
+      <TextField fx:id="phoneField" editable="false" layoutX="226.0" layoutY="272.0" prefHeight="25.0" prefWidth="322.0" />
+      <Button fx:id="closeButton" layoutX="496.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
    </children>
 </AnchorPane>

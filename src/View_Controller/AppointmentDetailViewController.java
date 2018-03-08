@@ -55,7 +55,7 @@ public class AppointmentDetailViewController {
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
-            String SQL = "SELECT appointment.appointmentid, customer.customerName, appointment.description, appointment.createdBy, appointment.start, appointment.end FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId WHERE appointmentid = '1'";
+            String SQL = "SELECT appointment.appointmentid, customer.customerName, appointment.description, appointment.createdBy, appointment.start, appointment.end FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId WHERE appointmentid = '" + AppointmentsViewController.selectedAppointmentID + "'";
             ResultSet rs = con.createStatement().executeQuery(SQL);
             while(rs.next()) {
                 appointmentIDField.setText(rs.getString("appointmentid"));

@@ -39,8 +39,11 @@ public class CustomerViewController {
     private Button editCustomerButton;
     
     @FXML
+    private Button scheduleButton;
+    
+    @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
-    customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerid"));
+    customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
     customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
     Customer.buildData();
     customersTable.setItems(Customer.data);
@@ -58,7 +61,12 @@ public class CustomerViewController {
     }
 
     @FXML
-    void handleClose(ActionEvent event) {
+    void handleClose(ActionEvent event) throws IOException {
+        Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
+        Scene appointmentsViewScene = new Scene(appointmentsViewParent);
+        Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appointmentsViewStage.setScene(appointmentsViewScene);
+        appointmentsViewStage.show();
 
     }
 
@@ -79,6 +87,11 @@ public class CustomerViewController {
         Stage customerDetailViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         customerDetailViewStage.setScene(customerDetailViewScene);
         customerDetailViewStage.show();
+
+    }
+    
+    @FXML
+    void handleSchedule(ActionEvent event) {
 
     }
 

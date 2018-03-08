@@ -1,7 +1,6 @@
 package View_Controller;
 
 import Model.Appointment;
-import static Model.Appointment.data;
 import Model.Database;
 import java.io.IOException;
 import javafx.collections.FXCollections;
@@ -18,7 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import java.sql.*;
-import javafx.beans.property.IntegerProperty;
+import static javafx.application.Platform.exit;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AppointmentsViewController {
@@ -100,8 +99,8 @@ public class AppointmentsViewController {
     
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
-        apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("Appointmentid"));
-        customerColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
+        apptIDColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+        customerColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("Description"));
         startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("Start"));
         endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("End"));
@@ -123,10 +122,11 @@ public class AppointmentsViewController {
 
     @FXML
     void handleEdit(ActionEvent event) throws IOException {
-        if (appointmentsTable.getSelectionModel().getSelectedItem() != null) {
-            Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
-            selectedAppointmentID = apptIDColumn.getText();
-        }
+        
+        Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
+        selectedAppointmentID = selectedAppointment.getAppointmentID();
+        
+        
         Parent appointmentEditViewParent = FXMLLoader.load(getClass().getResource("AppointmentEditView.fxml"));
         Scene appointmentEditViewScene = new Scene(appointmentEditViewParent);
         Stage appointmentEditViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -137,6 +137,7 @@ public class AppointmentsViewController {
 
     @FXML
     void handleExit(ActionEvent event) {
+        exit();
 
     }
 
@@ -167,10 +168,10 @@ public class AppointmentsViewController {
 
     @FXML
     void handleView(ActionEvent event) throws IOException {
-        if (appointmentsTable.getSelectionModel().getSelectedItem() != null) {
+    
             Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
-            selectedAppointmentID = apptIDColumn.getText();
-        }
+            selectedAppointmentID = selectedAppointment.getAppointmentID();
+        
         Parent appointementDetailViewParent = FXMLLoader.load(getClass().getResource("AppointmentDetailView.fxml"));
         Scene appointementDetailViewScene = new Scene(appointementDetailViewParent);
         Stage appointementDetailViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -17,44 +17,19 @@
       <TableView fx:id="appointmentsTable" layoutX="56.0" layoutY="146.0" prefHeight="284.0" prefWidth="839.0">
         <columns>
             <TableColumn fx:id="apptIDColumn" prefWidth="52.0" text="Appt ID">
-                <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="Appointmentid" />
-                </cellValueFactory>
+                
             </TableColumn>
             <TableColumn fx:id="customerColumn" prefWidth="155.0" text="Customer">
-                <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="CustomerId" />
-                </cellValueFactory>
+                
             </TableColumn>
             <TableColumn fx:id="typeColumn" prefWidth="221.0" text="Type">
-                <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="Description" />
-                </cellValueFactory>
+                
             </TableColumn>
             <TableColumn fx:id="startTimeColumn" prefWidth="202.0" text="Start Time">
-                <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="Start" />
-                </cellValueFactory>
+                
             </TableColumn>
             <TableColumn fx:id="endTimeColumn" prefWidth="208.0" text="End Time">
-                <cellFactory>
-                    <FormattedTableCellFactory alignment="CENTER" />
-                </cellFactory>
-                <cellValueFactory>
-                    <PropertyValueFactory property="End" />
-                </cellValueFactory>
+                
             </TableColumn>
         </columns>
       </TableView>
