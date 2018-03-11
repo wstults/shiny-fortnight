@@ -13,7 +13,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="saveButton" layoutX="119.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
+      <Button fx:id="saveButton" layoutX="119.0" layoutY="355.0" mnemonicParsing="false" text="Save" />
       <Button fx:id="cancelButton" layoutX="220.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
       <Label layoutX="90.0" layoutY="130.0" text="Customer" />
       <Label layoutX="91.0" layoutY="167.0" text="Type" />

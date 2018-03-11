@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.*;
+import java.util.function.Supplier;
 
 /**
  *
@@ -39,9 +40,15 @@ public class DateAndTime {
 		ldtStart = utcStart.toLocalDateTime();
 		
 		//Create Timestamp values from Instants to update database
-		java.sql.Timestamp startsqlts = java.sql.Timestamp.valueOf(ldtStart); //this value can be inserted into database
+		Timestamp startsqlts = Timestamp.valueOf(ldtStart); //this value can be inserted into database
                 
                 return startsqlts;
 }
+    
+    public static LocalDateTime convertToDateTime(String time) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
+        LocalDateTime result = LocalDateTime.parse(time, df);
+        return result;
+    }
     
 }

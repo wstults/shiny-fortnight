@@ -1,10 +1,12 @@
 package View_Controller;
 
 import Model.Database;
+import Model.DateAndTime;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,15 +53,39 @@ public class AppointmentEditViewController {
         Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appointmentsViewStage.setScene(appointmentsViewScene);
         appointmentsViewStage.show();
-
+        
     }
 
-    @FXML
-    void handleSave(ActionEvent event) {
+    /*@FXML
+    void handleSave(ActionEvent event) throws ClassNotFoundException, SQLException {
+        PreparedStatement ps;
+        objDbClass = new Database();
+        con = objDbClass.getConnection();
+        try {
+            String SQL = "UPDATE appointment "
+                    + "SET description = '" + typeField.getText() + "', "
+                    + "contact = '" + consultantField.getText() + "', "
+                    + "start = '" + startField.getText() + "', "
+                    + "end = '" + endField.getText() + "', "
+                    + "lastUpdate = '" + DateAndTime.getTimestamp() + "', "
+                    + "lastUpdateBy = '" + LoginScreenController.currentUser + "' "
+                    + "WHERE appointmentid = " + appointmentIDField.getText() + ";";
+            ps = con.prepareStatement(SQL);
+            ps.executeUpdate();
+            Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
+            Scene appointmentsViewScene = new Scene(appointmentsViewParent);
+            Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            appointmentsViewStage.setScene(appointmentsViewScene);
+            appointmentsViewStage.show();
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    }
+    }*/
     
-    public void initialize() throws ClassNotFoundException, SQLException {
+    @FXML
+    private void initialize() throws ClassNotFoundException, SQLException {
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
@@ -77,6 +103,29 @@ public class AppointmentEditViewController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        saveButton.setOnAction((event) -> {
+            PreparedStatement ps;
+            try {
+                String SQL = "UPDATE appointment "
+                    + "SET description = '" + typeField.getText() + "', "
+                    + "contact = '" + consultantField.getText() + "', "
+                    + "start = '" + startField.getText() + "', "
+                    + "end = '" + endField.getText() + "', "
+                    + "lastUpdate = '" + DateAndTime.getTimestamp() + "', "
+                    + "lastUpdateBy = '" + LoginScreenController.currentUser + "' "
+                    + "WHERE appointmentid = " + appointmentIDField.getText() + ";";
+                ps = con.prepareStatement(SQL);
+                ps.executeUpdate();
+                Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
+                Scene appointmentsViewScene = new Scene(appointmentsViewParent);
+                Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                appointmentsViewStage.setScene(appointmentsViewScene);
+                appointmentsViewStage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        
     }
 
 }

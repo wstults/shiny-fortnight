@@ -16,6 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class CustomerViewController {
+    
+    public static String selectedCustomerID;
 
     @FXML
     private TableView<Customer> customersTable;
@@ -43,10 +45,10 @@ public class CustomerViewController {
     
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
-    customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-    customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-    Customer.buildData();
-    customersTable.setItems(Customer.data);
+        customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        Customer.buildData();
+        customersTable.setItems(Customer.data);
     }
     
 
@@ -72,6 +74,9 @@ public class CustomerViewController {
 
     @FXML
     void handleEditCustomer(ActionEvent event) throws IOException {
+        
+        Customer selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
+        selectedCustomerID = selectedCustomer.getCustomerID();
         Parent customerEditViewParent = FXMLLoader.load(getClass().getResource("CustomerEditView.fxml"));
         Scene customerEditViewScene = new Scene(customerEditViewParent);
         Stage customerEditViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -82,6 +87,9 @@ public class CustomerViewController {
 
     @FXML
     void handleViewCustomer(ActionEvent event) throws IOException {
+        
+        Customer selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
+        selectedCustomerID = selectedCustomer.getCustomerID();
         Parent customerDetailViewParent = FXMLLoader.load(getClass().getResource("CustomerDetailView.fxml"));
         Scene customerDetailViewScene = new Scene(customerDetailViewParent);
         Stage customerDetailViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -91,8 +99,14 @@ public class CustomerViewController {
     }
     
     @FXML
-    void handleSchedule(ActionEvent event) {
-
+    void handleSchedule(ActionEvent event) throws IOException {
+        Customer selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
+        selectedCustomerID = selectedCustomer.getCustomerID();
+        Parent appointmentAddViewParent = FXMLLoader.load(getClass().getResource("AppointmentAddView.fxml"));
+        Scene appointmentAddViewScene = new Scene(appointmentAddViewParent);
+        Stage appointmentAddViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appointmentAddViewStage.setScene(appointmentAddViewScene);
+        appointmentAddViewStage.show();
     }
 
 }

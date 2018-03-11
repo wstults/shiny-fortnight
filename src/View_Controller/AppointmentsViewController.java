@@ -24,7 +24,7 @@ public class AppointmentsViewController {
     
     private Database objDbClass;
     private Connection con;
-    private ObservableList<Appointment> data;
+    public static ObservableList<Appointment> data;
     public static String selectedAppointmentID;
     //private MainApp mainApp;
 
@@ -87,7 +87,7 @@ public class AppointmentsViewController {
                 ap.setStart(rs.getString("start"));
                 ap.setEnd(rs.getString("end"));
                 data.add(ap);
-                System.out.println((rs.getString("appointmentid")) + " " + (rs.getString("customerName")) + " " + (rs.getString("description")) + " " + (rs.getString("start")) + " " + (rs.getString("end")));
+                
                 
             }
             appointmentsTable.setItems(data);

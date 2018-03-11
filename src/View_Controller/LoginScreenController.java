@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 import static javafx.application.Platform.exit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -21,6 +23,15 @@ public class LoginScreenController {
     
     public static String currentUser;
     static Stage stage;
+    
+    @FXML
+    private Label usernameLabel;
+
+    @FXML
+    private Label passwordLabel;
+
+    @FXML
+    private Label titleLabel;
 
     @FXML
     private Button loginButton;
@@ -33,6 +44,8 @@ public class LoginScreenController {
 
     @FXML
     private TextField passwordField;
+    
+    
 
     @FXML
     void handleExit(ActionEvent event) {
