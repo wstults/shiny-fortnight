@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Alerts;
 import Model.BusinessHoursException;
 import Model.Database;
 import Model.DateAndTime;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -133,6 +135,23 @@ public class AppointmentAddViewController {
                 String location = locationField.getText();
                 String start = startField.getText();
                 String end = endField.getText();
+                if (ErrorCheck.nullCheck(title) == false) {
+                    return;
+                }
+                if (ErrorCheck.nullCheck(type) == false) {
+                    return;
+                }
+                if (ErrorCheck.nullCheck(location) == false) {
+                    return;
+                }
+                if (ErrorCheck.nullCheck(start) == false) {
+                    return;
+                }
+                if (ErrorCheck.nullCheck(end) == false) {
+                    return;
+                }
+                LocalDateTime utcStart = DateAndTime.utcTime(start);
+                LocalDateTime utcEnd = DateAndTime.utcTime(end);
                 ErrorCheck.officeHoursCheck(start);
                 ErrorCheck.officeHoursCheck(end);
                 ErrorCheck.overlapCheck(start, end);
@@ -146,13 +165,14 @@ public class AppointmentAddViewController {
                 ps.setString(4, location);
                 ps.setString(5, LoginScreenController.currentUser);
                 ps.setString(6, "none");
-                ps.setString(7, start);
-                ps.setString(8, end);
+                ps.setString(7, utcStart.toString().substring(0, 19));
+                ps.setString(8, utcEnd.toString().substring(0, 19));
                 ps.setTimestamp(9, stamp);
                 ps.setString(10, LoginScreenController.currentUser);
                 ps.setTimestamp(11, stamp);
                 ps.setString(12, LoginScreenController.currentUser);
                 ps.executeUpdate();
+                Alerts.newApptConfirmation.run();
                 Parent customerViewParent = FXMLLoader.load(getClass().getResource("CustomerView.fxml"));
                 Scene customerViewScene = new Scene(customerViewParent);
                 Stage customerViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

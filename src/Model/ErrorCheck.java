@@ -6,10 +6,8 @@
 package Model;
 
 import View_Controller.AppointmentsViewController;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Calendar;
 import javafx.scene.control.Alert;
 
 /**
@@ -49,6 +47,35 @@ public class ErrorCheck {
             }
             
         }
+    }
+    
+    public static boolean nullCheck(String input) {
+        boolean result = true;
+        if (input.isEmpty()) {
+            result = false;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please input a value for all available fields.");
+            alert.showAndWait();
+        }
+        return result;
+    }
+    
+    public static boolean phoneCheck(String input) {
+        boolean result = true;
+        try {
+            Integer.valueOf(input);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            result = false;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!");
+            alert.setHeaderText("Error");
+            alert.setContentText("Phone number can be numeric only.");
+            alert.showAndWait();
+        }
+        return result;
     }
     
 }

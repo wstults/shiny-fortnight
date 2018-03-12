@@ -2,6 +2,7 @@ package View_Controller;
 
 import Model.Appointment;
 import Model.Database;
+import Model.DateAndTime;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import java.sql.*;
+import java.time.LocalDateTime;
 import static javafx.application.Platform.exit;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -84,8 +86,18 @@ public class AppointmentsViewController {
                 
                 ap.setCustomerID(rs.getString("customerName"));
                 ap.setDescription(rs.getString("description"));
-                ap.setStart(rs.getString("start"));
-                ap.setEnd(rs.getString("end"));
+                //ap.setStart(rs.getString("start").substring(0, 19));
+                Timestamp startStamp = rs.getTimestamp("start");
+                LocalDateTime utcTime = DateAndTime.timestampToDateTime(startStamp);
+                LocalDateTime zonedTime = DateAndTime.localTime(utcTime);
+                Timestamp finalTime = Timestamp.valueOf(zonedTime);
+                ap.setStart(finalTime.toString().substring(0, 19));
+                //ap.setEnd(rs.getString("end").substring(0, 19));
+                Timestamp endStamp = rs.getTimestamp("end");
+                LocalDateTime utcTime2 = DateAndTime.timestampToDateTime(endStamp);
+                LocalDateTime zonedTime2 = DateAndTime.localTime(utcTime2);
+                Timestamp finalTime2 = Timestamp.valueOf(zonedTime2);
+                ap.setEnd(finalTime2.toString().substring(0, 19));
                 data.add(ap);
                 
                 

@@ -2,6 +2,7 @@ package View_Controller;
 
 import Model.Database;
 import Model.DateAndTime;
+import Model.ErrorCheck;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -84,6 +85,21 @@ public class CustomerAddViewController {
             String zip = zipCodeField.getText();
             String phone = phoneNumberField.getText();
             String country = countryBox.getSelectionModel().getSelectedItem();
+            if (ErrorCheck.nullCheck(address1) == false) {
+                    return;
+                }
+            if (ErrorCheck.nullCheck(city) == false) {
+                    return;
+                }
+            if (ErrorCheck.nullCheck(zip) == false) {
+                    return;
+                }
+            if (ErrorCheck.nullCheck(phone) == false) {
+                    return;
+                }
+            if (ErrorCheck.phoneCheck(phone) == false) {
+                    return;
+                }
             int countryKey = 0;
             String countryCheck = "SELECT countryid FROM country WHERE country = '" + country + "'";
             ResultSet rs1 = con.createStatement().executeQuery(countryCheck);

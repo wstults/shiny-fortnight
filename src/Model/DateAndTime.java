@@ -51,4 +51,35 @@ public class DateAndTime {
         return result;
     }
     
+    public static LocalDateTime timestampToDateTime(Timestamp time) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
+        String converted = time.toString().substring(0, 19);
+        LocalDateTime result = LocalDateTime.parse(converted, df);
+        return result;
+    }
+    
+    public static LocalDateTime localTime(LocalDateTime time) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
+        ZoneId zid = ZoneId.systemDefault();
+        ZonedDateTime utcTime = time.atZone(ZoneId.of("UTC"));
+        System.out.println("Original time is " + utcTime);
+        ZonedDateTime adjustedTime = utcTime.withZoneSameInstant(zid);
+        System.out.println("Adjusted time is " + adjustedTime);
+        LocalDateTime finalTime = adjustedTime.toLocalDateTime();
+        System.out.println("Final Time is " + finalTime);
+        return finalTime;
+        
+    }
+    
+    public static LocalDateTime utcTime(String time) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
+        LocalDateTime ldtstart = convertToDateTime(time);
+        ZoneId zid = ZoneId.systemDefault();
+        ZonedDateTime localTime = ldtstart.atZone(zid);
+        ZonedDateTime utcTime = localTime.withZoneSameInstant(ZoneId.of("UTC"));
+        
+        LocalDateTime finalTime = utcTime.toLocalDateTime();
+        return finalTime;
+    }
+    
 }
