@@ -5,12 +5,9 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import View_Controller.*?>
-<?import Model.*?>
-
 
 <AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentsViewController">
    <children>
@@ -38,8 +35,11 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <RadioButton fx:id="weekRadio" layoutX="201.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleWeek" selected="true" text="This Week" />
-      <RadioButton fx:id="monthRadio" layoutX="291.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleMonth" text="This Month" />
+      <RadioButton fx:id="weekRadio" layoutX="201.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleWeek" selected="true" text="This Week">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleGroup1" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="monthRadio" layoutX="291.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleMonth" text="This Month" toggleGroup="$toggleGroup1" />
       <Button fx:id="customersButton" layoutX="626.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleCustomers" text="Customers" />
       <Button fx:id="reportsButton" layoutX="739.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleReports" text="Reports" />
       <Button fx:id="editAppointmentButton" layoutX="533.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleEdit" text="Edit Appointment" />

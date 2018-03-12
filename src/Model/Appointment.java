@@ -6,13 +6,7 @@
 package Model;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -107,6 +101,14 @@ public class Appointment {
     
     public void setEnd(String end) {
         End.set(end);
+    }
+    
+    public void setTitle(String title) {
+        Title.set(title);
+    }
+    
+    public void setContact(String contact) {
+        Contact.set(contact);
     }
     
     

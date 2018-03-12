@@ -18,8 +18,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import static javafx.application.Platform.exit;
+import javafx.scene.control.Alert;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AppointmentsViewController {
@@ -76,9 +78,54 @@ public class AppointmentsViewController {
         data = FXCollections.observableArrayList();
         objDbClass = new Database();
         con = objDbClass.getConnection();
+        
         try {
-            String SQL = "SELECT appointment.appointmentid, customer.customerName, appointment.description, appointment.start, appointment.end FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId ORDER BY start";
-            ResultSet rs = con.createStatement().executeQuery(SQL);
+            LocalDate now = LocalDate.now();
+            LocalDate nowPlus7 = now.plusDays(7);
+            String sql = "SELECT appointment.appointmentid, customer.customerName, appointment.description, appointment.start, appointment.end FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId WHERE start BETWEEN '" 
+                    + now.toString() + "' and '" + nowPlus7.toString() + "' ORDER BY start";
+            ResultSet rs = con.createStatement().executeQuery(sql);
+            while(rs.next()) {
+                Appointment ap;
+                ap = new Appointment();
+                ap.setAppointmentID(rs.getString("appointmentid"));
+                
+                ap.setCustomerID(rs.getString("customerName"));
+                ap.setDescription(rs.getString("description"));
+                //ap.setStart(rs.getString("start").substring(0, 19));
+                Timestamp startStamp = rs.getTimestamp("start");
+                LocalDateTime utcTime = DateAndTime.timestampToDateTime(startStamp);
+                LocalDateTime zonedTime = DateAndTime.localTime(utcTime);
+                Timestamp finalTime = Timestamp.valueOf(zonedTime);
+                ap.setStart(finalTime.toString().substring(0, 19));
+                //ap.setEnd(rs.getString("end").substring(0, 19));
+                Timestamp endStamp = rs.getTimestamp("end");
+                LocalDateTime utcTime2 = DateAndTime.timestampToDateTime(endStamp);
+                LocalDateTime zonedTime2 = DateAndTime.localTime(utcTime2);
+                Timestamp finalTime2 = Timestamp.valueOf(zonedTime2);
+                ap.setEnd(finalTime2.toString().substring(0, 19));
+                data.add(ap);
+                
+                
+            }
+            appointmentsTable.setItems(data);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void buildDataMonth() throws SQLException, ClassNotFoundException {
+        data = FXCollections.observableArrayList();
+        objDbClass = new Database();
+        con = objDbClass.getConnection();
+        
+        try {
+            LocalDate now = LocalDate.now();
+            LocalDate nowPlus30 = now.plusDays(30);
+            String sql = "SELECT appointment.appointmentid, customer.customerName, appointment.description, appointment.start, appointment.end FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId WHERE start BETWEEN '" 
+                    + now.toString() + "' and '" + nowPlus30.toString() + "' ORDER BY start";
+            ResultSet rs = con.createStatement().executeQuery(sql);
             while(rs.next()) {
                 Appointment ap;
                 ap = new Appointment();
@@ -108,6 +155,23 @@ public class AppointmentsViewController {
         }
     }
     
+    private void reminder() {
+        LocalDateTime now = LocalDateTime.now();
+        
+        for (Appointment a:data) {
+            LocalDateTime extractedStart = DateAndTime.convertToDateTime(a.getStart().substring(0, 19));
+            LocalDateTime extractedStartMinus15 = extractedStart.minusMinutes(15);
+            if (now.isAfter(extractedStartMinus15) && now.isBefore(extractedStart)) {
+                
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Reminder");
+                alert.setHeaderText("Appointment Soon");
+                alert.setContentText("There is an appointment soon:\nAppointment ID - " + a.getAppointmentID() + "\nStart Time - " + a.getStart() + "\nEnd Time - " + a.getEnd());
+                alert.showAndWait();
+            }
+        }
+    }
+    
     
     @FXML
     private void initialize() throws SQLException, ClassNotFoundException {
@@ -117,6 +181,7 @@ public class AppointmentsViewController {
         startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("Start"));
         endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("End"));
         buildData();
+        reminder();
         
     }
     
@@ -154,8 +219,8 @@ public class AppointmentsViewController {
     }
 
     @FXML
-    void handleMonth(ActionEvent event) {
-
+    void handleMonth(ActionEvent event) throws SQLException, ClassNotFoundException {
+        buildDataMonth();
     }
 
     @FXML
@@ -193,14 +258,10 @@ public class AppointmentsViewController {
     }
 
     @FXML
-    void handleWeek(ActionEvent event) {
-
+    void handleWeek(ActionEvent event) throws SQLException, ClassNotFoundException {
+        buildData();
     }
     
-    //public void setMainApp(MainApp mainApp) {
-    //    this.mainApp = mainApp;
-    //    appointmentsTable.setItems(data);
-        
-    //}
+    
 
 }
