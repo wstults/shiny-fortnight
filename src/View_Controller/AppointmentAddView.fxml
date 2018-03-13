@@ -49,5 +49,10 @@
             <TextField fx:id="locationField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
+      <Label layoutX="114.0" layoutY="57.0" text="Date Format: YYYY-MM-DD HH:MM:SS">
+         <font>
+            <Font name="System Italic" size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

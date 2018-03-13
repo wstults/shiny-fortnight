@@ -3,7 +3,6 @@ package View_Controller;
 import Model.Appointment;
 import Model.Database;
 import Model.DateAndTime;
-import static View_Controller.AppointmentsViewController.data;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -66,6 +65,7 @@ public class ReportsViewController {
 
     @FXML
     void handleClose(ActionEvent event) throws IOException {
+        // Clicking Close returns the user to the Appointments View
         Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
         Scene appointmentsViewScene = new Scene(appointmentsViewParent);
         Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -75,7 +75,9 @@ public class ReportsViewController {
     
     @FXML
     void handleGenerate(ActionEvent event) throws ClassNotFoundException, SQLException {
+        // Get the type of report chosen from the choicebox
         String report = reportBox.getSelectionModel().getSelectedItem();
+        // Decide which report to generate
         if (report.equals("View Appointments by Type")) {
             typeReport();
             reportTable.setItems(typeData);
@@ -102,32 +104,28 @@ public class ReportsViewController {
     }
     
     private void typeReport() throws ClassNotFoundException, SQLException {
+        // For generating an observable list organized by type
         typeData = FXCollections.observableArrayList();
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
+            // Retrive the data from the database and order appropriately
             String sql = "SELECT customer.customerName, appointment.title, appointment.description, appointment.contact, appointment.start FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId ORDER BY description, start";
             ResultSet rs = con.createStatement().executeQuery(sql);
             while(rs.next()) {
+                // Create Appointment objects from query results
                 Appointment ap;
                 ap = new Appointment();
-                
                 ap.setCustomerID(rs.getString("customerName"));
                 ap.setTitle(rs.getString("title"));
                 ap.setDescription(rs.getString("description"));
                 ap.setContact(rs.getString("contact"));
-                //ap.setStart(rs.getString("start").substring(0, 19));
                 Timestamp startStamp = rs.getTimestamp("start");
                 LocalDateTime utcTime = DateAndTime.timestampToDateTime(startStamp);
                 LocalDateTime zonedTime = DateAndTime.localTime(utcTime);
                 Timestamp finalTime = Timestamp.valueOf(zonedTime);
                 ap.setStart(finalTime.toString().substring(0, 19));
-                //ap.setEnd(rs.getString("end").substring(0, 19));
-                //Timestamp endStamp = rs.getTimestamp("end");
-                //LocalDateTime utcTime2 = DateAndTime.timestampToDateTime(endStamp);
-                //LocalDateTime zonedTime2 = DateAndTime.localTime(utcTime2);
-                //Timestamp finalTime2 = Timestamp.valueOf(zonedTime2);
-                //ap.setEnd(finalTime2.toString().substring(0, 19));
+                // Add the Appointment to the observable list
                 typeData.add(ap);
         } 
     } catch(Exception e) {
@@ -136,32 +134,28 @@ public class ReportsViewController {
     }
     
     private void consultantReport() throws ClassNotFoundException, SQLException {
+        // For generating an observable list organized by consultant
         consultantData = FXCollections.observableArrayList();
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
+            // Retrive the data from the database and order appropriately
             String sql = "SELECT customer.customerName, appointment.title, appointment.description, appointment.contact, appointment.start FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId ORDER BY contact, start";
             ResultSet rs = con.createStatement().executeQuery(sql);
             while(rs.next()) {
+                // Create Appointment objects from query results
                 Appointment ap;
                 ap = new Appointment();
-                
                 ap.setCustomerID(rs.getString("customerName"));
                 ap.setTitle(rs.getString("title"));
                 ap.setDescription(rs.getString("description"));
                 ap.setContact(rs.getString("contact"));
-                //ap.setStart(rs.getString("start").substring(0, 19));
                 Timestamp startStamp = rs.getTimestamp("start");
                 LocalDateTime utcTime = DateAndTime.timestampToDateTime(startStamp);
                 LocalDateTime zonedTime = DateAndTime.localTime(utcTime);
                 Timestamp finalTime = Timestamp.valueOf(zonedTime);
                 ap.setStart(finalTime.toString().substring(0, 19));
-                //ap.setEnd(rs.getString("end").substring(0, 19));
-                //Timestamp endStamp = rs.getTimestamp("end");
-                //LocalDateTime utcTime2 = DateAndTime.timestampToDateTime(endStamp);
-                //LocalDateTime zonedTime2 = DateAndTime.localTime(utcTime2);
-                //Timestamp finalTime2 = Timestamp.valueOf(zonedTime2);
-                //ap.setEnd(finalTime2.toString().substring(0, 19));
+                // Add the Appointment to the observable list
                 consultantData.add(ap);
         } 
     } catch(Exception e) {
@@ -170,37 +164,32 @@ public class ReportsViewController {
     }
     
     private void customerReport() throws ClassNotFoundException, SQLException {
+        // For generating an observable list organized by customer
         customerData = FXCollections.observableArrayList();
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
+            // Retrive the data from the database and order appropriately
             String sql = "SELECT customer.customerName, appointment.title, appointment.description, appointment.contact, appointment.start FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId ORDER BY customerName, start";
             ResultSet rs = con.createStatement().executeQuery(sql);
             while(rs.next()) {
+                // Create Appointment objects from query results
                 Appointment ap;
                 ap = new Appointment();
-                
                 ap.setCustomerID(rs.getString("customerName"));
                 ap.setTitle(rs.getString("title"));
                 ap.setDescription(rs.getString("description"));
                 ap.setContact(rs.getString("contact"));
-                //ap.setStart(rs.getString("start").substring(0, 19));
                 Timestamp startStamp = rs.getTimestamp("start");
                 LocalDateTime utcTime = DateAndTime.timestampToDateTime(startStamp);
                 LocalDateTime zonedTime = DateAndTime.localTime(utcTime);
                 Timestamp finalTime = Timestamp.valueOf(zonedTime);
                 ap.setStart(finalTime.toString().substring(0, 19));
-                //ap.setEnd(rs.getString("end").substring(0, 19));
-                //Timestamp endStamp = rs.getTimestamp("end");
-                //LocalDateTime utcTime2 = DateAndTime.timestampToDateTime(endStamp);
-                //LocalDateTime zonedTime2 = DateAndTime.localTime(utcTime2);
-                //Timestamp finalTime2 = Timestamp.valueOf(zonedTime2);
-                //ap.setEnd(finalTime2.toString().substring(0, 19));
+                // Add the Appointment to the observable list
                 customerData.add(ap);
         } 
     } catch(Exception e) {
             e.printStackTrace();
         }
     }
-
 }

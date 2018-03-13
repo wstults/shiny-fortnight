@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Alerts;
 import Model.Database;
 import Model.DateAndTime;
 import Model.ErrorCheck;
@@ -43,8 +44,6 @@ public class CustomerAddViewController {
     @FXML
     private TextField cityField;
 
-    
-
     @FXML
     private TextField zipCodeField;
 
@@ -63,6 +62,7 @@ public class CustomerAddViewController {
 
     @FXML
     void handleClose(ActionEvent event) throws IOException {
+        // Clicking the close button returns the user to the Customer View
         Parent customerViewParent = FXMLLoader.load(getClass().getResource("CustomerView.fxml"));
         Scene customerViewScene = new Scene(customerViewParent);
         Stage customerViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -75,16 +75,18 @@ public class CustomerAddViewController {
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
-            
             Timestamp stamp = DateAndTime.getTimestamp();
             String name = nameField.getText();
             String address1 = addressOneField.getText();
             String address2 = addressTwoField.getText();
             String city = cityField.getText();
-            
             String zip = zipCodeField.getText();
             String phone = phoneNumberField.getText();
             String country = countryBox.getSelectionModel().getSelectedItem();
+            // Checking for blank fields
+            if (ErrorCheck.nullCheck(name) == false) {
+                    return;
+                }
             if (ErrorCheck.nullCheck(address1) == false) {
                     return;
                 }
@@ -101,12 +103,13 @@ public class CustomerAddViewController {
                     return;
                 }
             int countryKey = 0;
+            // Retrieve the country ID from the database
             String countryCheck = "SELECT countryid FROM country WHERE country = '" + country + "'";
             ResultSet rs1 = con.createStatement().executeQuery(countryCheck);
             while (rs1.next()) {
             countryKey = rs1.getInt("countryid");
-            
             }
+            // Retrieve the city ID from the database, or add a new city if necessary
             int cityKey = 0; 
             String cityCheck = "SELECT cityid FROM city WHERE city = '" + city + "'";
             ResultSet rs2 = con.createStatement().executeQuery(cityCheck);
@@ -128,6 +131,7 @@ public class CustomerAddViewController {
                 cityKey = rs3.getInt("cityid");
                 }
             }
+            // Retrieve the address ID from the database, or add a new address if necessary
             int addressKey = 0;
             String addressCheck = "SELECT addressid FROM address WHERE address = '" + address1 + "'";
             ResultSet rs4 = con.createStatement().executeQuery(addressCheck);
@@ -152,10 +156,9 @@ public class CustomerAddViewController {
                 addressKey = rs5.getInt("addressid");
                 }
             }
-            
+            // Insert the new customer's information into the database
             String sql = "INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
             PreparedStatement ps3 = con.prepareStatement(sql);
             ps3.setString(1, name);
             ps3.setInt(2, addressKey);
@@ -165,11 +168,12 @@ public class CustomerAddViewController {
             ps3.setTimestamp(6, stamp);
             ps3.setString(7, LoginScreenController.currentUser);
             ps3.executeUpdate();
-
+            // Display pop up confirmation that the customer add was successful
+            Alerts.newCustomerConfirmation.run();
         } catch (SQLException ex){
             ex.printStackTrace();
         }
-        
+        // Return the user to the Customer View
         Parent customerViewParent = FXMLLoader.load(getClass().getResource("CustomerView.fxml"));
         Scene customerViewScene = new Scene(customerViewParent);
         Stage customerViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -179,8 +183,8 @@ public class CustomerAddViewController {
     
     @FXML
     private void initialize() {
+        // Set initial value for Country choicebox, and populate choices
         countryBox.setValue("USA");
         countryBox.setItems(countryList);
     }
-
 }

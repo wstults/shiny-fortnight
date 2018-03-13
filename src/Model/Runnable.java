@@ -9,6 +9,8 @@ package Model;
  *
  * @author William
  */
+
+// Interface build for use with Lambda expressions
 public interface Runnable {
     public void run();
 }

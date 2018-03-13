@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Alerts;
 import Model.DateAndTime;
 import java.io.IOException;
 import java.sql.Connection;
@@ -33,12 +34,12 @@ public class LoginAddViewController {
 
     @FXML
     void handleClose(ActionEvent event) throws IOException {
+        // Clicking Close bring the user back to the Appointments View
         Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
         Scene appointmentsViewScene = new Scene(appointmentsViewParent);
         Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appointmentsViewStage.setScene(appointmentsViewScene);
         appointmentsViewStage.show();
-
     }
 
     @FXML
@@ -56,8 +57,9 @@ public class LoginAddViewController {
             conn = DriverManager.getConnection(DB_URL, DBUSER, DBPASS);
             PreparedStatement ps = null;
             try {
-
+                // Generate a current time Timestamp
                 Timestamp stamp = DateAndTime.getTimestamp();
+                // Insert the new user's data into the database
                 String sql = "INSERT INTO user (userName, password, active, createBy, createDate, lastUpdate, lastUpdatedBy) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?)";
                 ps = conn.prepareStatement(sql);
@@ -69,7 +71,8 @@ public class LoginAddViewController {
                 ps.setTimestamp(6, stamp);
                 ps.setString(7, LoginScreenController.currentUser);
                 ps.executeUpdate();
-                
+                // Display a pop up notification of successful add
+                Alerts.newUserConfirmation.run();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -78,6 +81,5 @@ public class LoginAddViewController {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
     }
 }

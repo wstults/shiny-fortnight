@@ -34,6 +34,7 @@ public class Customer {
         
     }
     
+    // "getters" for all Customer fields
     public String getCustomerID() {
         return customerid.get();
     }
@@ -66,6 +67,7 @@ public class Customer {
         return lastUpdateBy.get();
     }
     
+    // Method used for building an observable list of customer names and their related IDs
     public static void buildData() throws SQLException, ClassNotFoundException {
         data = FXCollections.observableArrayList();
         objDbClass = new Database();
@@ -75,21 +77,12 @@ public class Customer {
             ResultSet rs = con.createStatement().executeQuery(SQL);
             while(rs.next()) {
                 Customer cu = new Customer();
-                
                 cu.customerid.set(rs.getString("customerid"));
-                
                 cu.customerName.set(rs.getString("customerName"));
-                
                 data.add(cu);
-                
-                
             }
-            
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
 }

@@ -14,12 +14,15 @@ import javafx.scene.control.Alert;
  *
  * @author William
  */
+
+// Class created to house methods for the purpose of exception controls
 public class ErrorCheck {
     
     public static String apptID;
     public static String startTime;
     public static String endTime;
     
+    // Checks to make sure an appointment being saved falls between 8am and 5pm
     public static void officeHoursCheck(String time) throws BusinessHoursException {
         
         LocalTime open = LocalTime.of(8, 0);
@@ -29,10 +32,9 @@ public class ErrorCheck {
         if (hour.isBefore(open) || hour.isAfter(close)) {
             throw new BusinessHoursException();
         }
-        
-        
     }
     
+    // Checks to make sure an appointment being saved does not overlap another previously scheduled appointment
     public static void overlapCheck(String start, String end) throws OverlapException {
         LocalDateTime convertedStart = DateAndTime.convertToDateTime(start);
         LocalDateTime convertedEnd = DateAndTime.convertToDateTime(end);
@@ -45,10 +47,10 @@ public class ErrorCheck {
                 endTime = a.getEnd();
                 throw new OverlapException();
             }
-            
         }
     }
     
+    // Checks to make sure form fields are not left blank
     public static boolean nullCheck(String input) {
         boolean result = true;
         if (input.isEmpty()) {
@@ -62,12 +64,12 @@ public class ErrorCheck {
         return result;
     }
     
+    // Checks to make sure a phone number contains no alpha characters
     public static boolean phoneCheck(String input) {
         boolean result = true;
         try {
-            Integer.valueOf(input);
+            Long.valueOf(input);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
             result = false;
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error!");
@@ -77,5 +79,4 @@ public class ErrorCheck {
         }
         return result;
     }
-    
 }

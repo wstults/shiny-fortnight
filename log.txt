@@ -1,0 +1,16 @@
+Mar 12, 2018 4:04:44 PM View_Controller.LoginScreenController handleLogin
+INFO: test logged in.
+Mar 12, 2018 4:09:50 PM View_Controller.LoginScreenController handleLogin
+INFO: user1 logged in.
+Mar 12, 2018 4:23:38 PM View_Controller.LoginScreenController handleLogin
+INFO: test logged in.
+Mar 12, 2018 4:32:54 PM View_Controller.LoginScreenController handleLogin
+INFO: test logged in.
+Mar 12, 2018 4:45:40 PM View_Controller.LoginScreenController handleLogin
+INFO: test logged in.
+Mar 12, 2018 4:50:11 PM View_Controller.LoginScreenController handleLogin
+INFO: test logged in.
+Mar 12, 2018 5:03:04 PM View_Controller.LoginScreenController handleLogin
+INFO: test logged in.
+Mar 12, 2018 5:06:56 PM View_Controller.LoginScreenController handleLogin
+INFO: test logged in.

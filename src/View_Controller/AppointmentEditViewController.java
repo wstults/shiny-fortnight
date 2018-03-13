@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Alerts;
 import Model.BusinessHoursException;
 import Model.Database;
 import Model.DateAndTime;
@@ -58,50 +59,24 @@ public class AppointmentEditViewController {
 
     @FXML
     void handleCancel(ActionEvent event) throws IOException {
+        // Clicking Cancel returns the user to the Appointments View
         Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
         Scene appointmentsViewScene = new Scene(appointmentsViewParent);
         Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appointmentsViewStage.setScene(appointmentsViewScene);
         appointmentsViewStage.show();
-        
     }
 
-    /*@FXML
-    void handleSave(ActionEvent event) throws ClassNotFoundException, SQLException {
-        PreparedStatement ps;
-        objDbClass = new Database();
-        con = objDbClass.getConnection();
-        try {
-            String SQL = "UPDATE appointment "
-                    + "SET description = '" + typeField.getText() + "', "
-                    + "contact = '" + consultantField.getText() + "', "
-                    + "start = '" + startField.getText() + "', "
-                    + "end = '" + endField.getText() + "', "
-                    + "lastUpdate = '" + DateAndTime.getTimestamp() + "', "
-                    + "lastUpdateBy = '" + LoginScreenController.currentUser + "' "
-                    + "WHERE appointmentid = " + appointmentIDField.getText() + ";";
-            ps = con.prepareStatement(SQL);
-            ps.executeUpdate();
-            Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
-            Scene appointmentsViewScene = new Scene(appointmentsViewParent);
-            Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appointmentsViewStage.setScene(appointmentsViewScene);
-            appointmentsViewStage.show();
-        
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }*/
-    
     @FXML
     private void initialize() throws ClassNotFoundException, SQLException {
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
+            // Retrieve the selected appointment from the database
             String SQL = "SELECT appointment.appointmentid, customer.customerName, appointment.title, appointment.description, appointment.location, appointment.start, appointment.end FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId WHERE appointmentid = '" + AppointmentsViewController.selectedAppointmentID + "'";
             ResultSet rs = con.createStatement().executeQuery(SQL);
             while(rs.next()) {
+                // Perform necessary conversions from UTC time to local time
                 Timestamp startStamp = rs.getTimestamp("start");
                 LocalDateTime utcTime = DateAndTime.timestampToDateTime(startStamp);
                 LocalDateTime zonedTime = DateAndTime.localTime(utcTime);
@@ -111,22 +86,22 @@ public class AppointmentEditViewController {
                 LocalDateTime utcTime2 = DateAndTime.timestampToDateTime(endStamp);
                 LocalDateTime zonedTime2 = DateAndTime.localTime(utcTime2);
                 Timestamp finalTime2 = Timestamp.valueOf(zonedTime2);
+                // Populate fields from query results
                 endField.setText(finalTime2.toString().substring(0, 19));
                 appointmentIDField.setText(rs.getString("appointmentid"));
                 customerField.setText(rs.getString("customerName"));
                 typeField.setText(rs.getString("description"));
                 titleField.setText(rs.getString("title"));
                 locationField.setText(rs.getString("location"));
-                //startField.setText(rs.getString("start").substring(0, 19));
-                //endField.setText(rs.getString("end").substring(0, 19));
             }
-        
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // Lambda expression for handling Save button click
         saveButton.setOnAction((event) -> {
             try {
                 PreparedStatement ps;
+                // Checking for blank fields
                 if (ErrorCheck.nullCheck(titleField.getText()) == false) {
                     return;
                 }
@@ -142,15 +117,18 @@ public class AppointmentEditViewController {
                 if (ErrorCheck.nullCheck(endField.getText()) == false) {
                     return;
                 }
-                
+                // Convert date and time from local time to UTC
                 LocalDateTime utcStart = DateAndTime.utcTime(startField.getText());
                 LocalDateTime utcEnd = DateAndTime.utcTime(endField.getText());
+                // Put appointment times through exception checks
                 ErrorCheck.officeHoursCheck(startField.getText());
                 ErrorCheck.officeHoursCheck(endField.getText());
                 ErrorCheck.overlapCheck(startField.getText(), endField.getText());
+                // Generate Timestamp objects from converted times
                 Timestamp finalStart = Timestamp.valueOf(utcStart);
                 Timestamp finalEnd = Timestamp.valueOf(utcEnd);
                 try {
+                    // Update the appointment record in the database
                     String SQL = "UPDATE appointment "
                             + "SET description = '" + typeField.getText() + "', "
                             + "title = '" + titleField.getText() + "', "
@@ -162,6 +140,9 @@ public class AppointmentEditViewController {
                             + "WHERE appointmentid = " + appointmentIDField.getText() + ";";
                     ps = con.prepareStatement(SQL);
                     ps.executeUpdate();
+                    // Display pop up confirmation for successful edit
+                    Alerts.editApptConfirmation.run();
+                    // Return the user to the Appointments View
                     Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
                     Scene appointmentsViewScene = new Scene(appointmentsViewParent);
                     Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -176,7 +157,5 @@ public class AppointmentEditViewController {
                 Logger.getLogger(AppointmentEditViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
     }
-
 }

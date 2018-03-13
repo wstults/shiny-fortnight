@@ -12,45 +12,40 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.*;
-import java.util.function.Supplier;
 
 /**
  *
  * @author William
  */
+
+// Class designed for use when generating timestamps for database entries, and various date and time conversions
 public class DateAndTime {
     
+    // Generates a timestamp based on current local time, and converts to UTC
     public static Timestamp getTimestamp()  {
-    //Getting the LocalDateTime Objects from String values
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss"); 
-                String date = LocalDate.now().toString();
-                String time = LocalTime.now().toString().substring(0, 8);
-		String txtStartTime = date + " " + time;
-
-		LocalDateTime ldtStart = LocalDateTime.parse(txtStartTime, df);
-
-
-		
-		ZoneId zid = ZoneId.systemDefault();
-
-		ZonedDateTime zdtStart = ldtStart.atZone(zid);
-		
-		ZonedDateTime utcStart = zdtStart.withZoneSameInstant(ZoneId.of("UTC"));
-		
-		ldtStart = utcStart.toLocalDateTime();
-		
-		//Create Timestamp values from Instants to update database
-		Timestamp startsqlts = Timestamp.valueOf(ldtStart); //this value can be inserted into database
-                
-                return startsqlts;
+    
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss"); 
+        String date = LocalDate.now().toString();
+        String time = LocalTime.now().toString().substring(0, 8);
+        String txtStartTime = date + " " + time;
+        LocalDateTime ldtStart = LocalDateTime.parse(txtStartTime, df);
+        ZoneId zid = ZoneId.systemDefault();
+        ZonedDateTime zdtStart = ldtStart.atZone(zid);
+	ZonedDateTime utcStart = zdtStart.withZoneSameInstant(ZoneId.of("UTC"));
+	ldtStart = utcStart.toLocalDateTime();
+	//Create Timestamp values from Instants to update database
+	Timestamp startsqlts = Timestamp.valueOf(ldtStart);
+        return startsqlts;
 }
     
+    // Converts a specifically formatted string into a LocalDateTime object
     public static LocalDateTime convertToDateTime(String time) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
         LocalDateTime result = LocalDateTime.parse(time, df);
         return result;
     }
     
+    // Converts a Timestamp object into a LocalDateTime object
     public static LocalDateTime timestampToDateTime(Timestamp time) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
         String converted = time.toString().substring(0, 19);
@@ -58,28 +53,24 @@ public class DateAndTime {
         return result;
     }
     
+    // Converts a UTC LocalDateTime into a LocalDateTime adjusted for the current time zone
     public static LocalDateTime localTime(LocalDateTime time) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
         ZoneId zid = ZoneId.systemDefault();
         ZonedDateTime utcTime = time.atZone(ZoneId.of("UTC"));
-        System.out.println("Original time is " + utcTime);
         ZonedDateTime adjustedTime = utcTime.withZoneSameInstant(zid);
-        System.out.println("Adjusted time is " + adjustedTime);
         LocalDateTime finalTime = adjustedTime.toLocalDateTime();
-        System.out.println("Final Time is " + finalTime);
         return finalTime;
-        
     }
     
+    // Converts a specifically formatted current time zone String into a LocalDateTime object in UTC
     public static LocalDateTime utcTime(String time) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss");
         LocalDateTime ldtstart = convertToDateTime(time);
         ZoneId zid = ZoneId.systemDefault();
         ZonedDateTime localTime = ldtstart.atZone(zid);
         ZonedDateTime utcTime = localTime.withZoneSameInstant(ZoneId.of("UTC"));
-        
         LocalDateTime finalTime = utcTime.toLocalDateTime();
         return finalTime;
     }
-    
 }

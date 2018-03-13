@@ -5,6 +5,7 @@
  */
 package View_Controller;
 
+
 import java.util.Locale;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,7 +26,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println(Locale.getDefault() == Locale.FRANCE);
+        // Check locale and determine which login screen to display
         if (Locale.getDefault().equals(Locale.FRANCE)) {
             Parent root = FXMLLoader.load(getClass().getResource("LoginScreenFR.fxml"));
             Scene scene = new Scene(root);
@@ -40,22 +41,15 @@ public class MainApp extends Application {
     }
     
     public void exit() {
-        
+        // Clicking Exit ends the application
         Platform.exit();
     }
     
 
     
     public static void main(String[] args) {
-        
+        // Un-commenting the line below will set the locale to France
         //Locale.setDefault(new Locale("fr", "FR"));
-        
         launch(args);
-        
-        
-        
     }
-    
-    
-    
 }

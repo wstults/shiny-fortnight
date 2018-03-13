@@ -35,6 +35,7 @@ public class Appointment {
         
     }
     
+    // "getters" for all Appointment fields
     public String getAppointmentID() {
         return Appointmentid.get();
     }
@@ -83,6 +84,7 @@ public class Appointment {
         return LastUpdateBy.get();
     }
     
+    // "setters" for all relevant Appointment fields
     public void setAppointmentID(String appointmentid){
         Appointmentid.set(appointmentid);
     }

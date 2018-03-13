@@ -47,34 +47,34 @@ public class CustomerViewController {
     private void initialize() throws SQLException, ClassNotFoundException {
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        // Create an observable list to display in the customers tableview
         Customer.buildData();
         customersTable.setItems(Customer.data);
     }
     
-
     @FXML
     void handleAddCustomer(ActionEvent event) throws IOException {
+        // Clicking Add Customer brings the user to the Customer Add View
         Parent customerAddViewParent = FXMLLoader.load(getClass().getResource("CustomerAddView.fxml"));
         Scene customerAddViewScene = new Scene(customerAddViewParent);
         Stage customerAddViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         customerAddViewStage.setScene(customerAddViewScene);
         customerAddViewStage.show();
-
     }
 
     @FXML
     void handleClose(ActionEvent event) throws IOException {
+        // Clicking close returns the user to the Appointments View
         Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
         Scene appointmentsViewScene = new Scene(appointmentsViewParent);
         Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appointmentsViewStage.setScene(appointmentsViewScene);
         appointmentsViewStage.show();
-
     }
 
     @FXML
     void handleEditCustomer(ActionEvent event) throws IOException {
-        
+        // Clicking Edit Customer brings the user to the Customer Edit View, capturing the selected customer
         Customer selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         selectedCustomerID = selectedCustomer.getCustomerID();
         Parent customerEditViewParent = FXMLLoader.load(getClass().getResource("CustomerEditView.fxml"));
@@ -82,12 +82,11 @@ public class CustomerViewController {
         Stage customerEditViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         customerEditViewStage.setScene(customerEditViewScene);
         customerEditViewStage.show();
-
     }
 
     @FXML
     void handleViewCustomer(ActionEvent event) throws IOException {
-        
+        // Clicking View Customer Details brings the user to the Customer Detail View, capturing the selected customer
         Customer selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         selectedCustomerID = selectedCustomer.getCustomerID();
         Parent customerDetailViewParent = FXMLLoader.load(getClass().getResource("CustomerDetailView.fxml"));
@@ -95,11 +94,11 @@ public class CustomerViewController {
         Stage customerDetailViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         customerDetailViewStage.setScene(customerDetailViewScene);
         customerDetailViewStage.show();
-
     }
     
     @FXML
     void handleSchedule(ActionEvent event) throws IOException {
+        // Clicking Schedule Appointment brings the user to the Appointment Add View, capturing the selected customer
         Customer selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         selectedCustomerID = selectedCustomer.getCustomerID();
         Parent appointmentAddViewParent = FXMLLoader.load(getClass().getResource("AppointmentAddView.fxml"));
@@ -108,5 +107,4 @@ public class CustomerViewController {
         appointmentAddViewStage.setScene(appointmentAddViewScene);
         appointmentAddViewStage.show();
     }
-
 }

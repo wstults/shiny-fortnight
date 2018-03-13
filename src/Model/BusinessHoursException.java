@@ -11,7 +11,10 @@ import javafx.scene.control.Alert;
  *
  * @author William
  */
+
+// Custom exception class for use when checking if an appointment time falls outside of business hours
 public class BusinessHoursException extends Exception {
+    
     public BusinessHoursException() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error!");
@@ -19,5 +22,4 @@ public class BusinessHoursException extends Exception {
         alert.setContentText("Appointments may not be scheduled outside of local business hours.");
         alert.showAndWait();
     }
-    
 }

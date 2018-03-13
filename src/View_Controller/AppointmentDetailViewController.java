@@ -52,21 +52,23 @@ public class AppointmentDetailViewController {
 
     @FXML
     void handleClose(ActionEvent event) throws IOException {
+        // Clicking Close returns the user to the Appointments View
         Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
         Scene appointmentsViewScene = new Scene(appointmentsViewParent);
         Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appointmentsViewStage.setScene(appointmentsViewScene);
         appointmentsViewStage.show();
-
     }
     
     public void initialize() throws ClassNotFoundException, SQLException {
         objDbClass = new Database();
         con = objDbClass.getConnection();
         try {
+            // Retrive the currently selected appointment from the database
             String SQL = "SELECT appointment.appointmentid, customer.customerName, appointment.description, appointment.createdBy, appointment.start, appointment.end, appointment.title, appointment.location FROM appointment INNER JOIN customer on customer.customerid = appointment.customerId WHERE appointmentid = '" + AppointmentsViewController.selectedAppointmentID + "'";
             ResultSet rs = con.createStatement().executeQuery(SQL);
             while(rs.next()) {
+                // Convert database UTC times to local time zone
                 Timestamp startStamp = rs.getTimestamp("start");
                 LocalDateTime utcTime = DateAndTime.timestampToDateTime(startStamp);
                 LocalDateTime zonedTime = DateAndTime.localTime(utcTime);
@@ -76,6 +78,7 @@ public class AppointmentDetailViewController {
                 LocalDateTime utcTime2 = DateAndTime.timestampToDateTime(endStamp);
                 LocalDateTime zonedTime2 = DateAndTime.localTime(utcTime2);
                 Timestamp finalTime2 = Timestamp.valueOf(zonedTime2);
+                // Populate appointment detail fields from database columns
                 endField.setText(finalTime2.toString().substring(0, 19));
                 appointmentIDField.setText(rs.getString("appointmentid"));
                 customerField.setText(rs.getString("customerName"));
@@ -83,10 +86,7 @@ public class AppointmentDetailViewController {
                 typeField.setText(rs.getString("description"));
                 consultantField.setText(rs.getString("createdBy"));
                 locationField.setText(rs.getString("location"));
-                //startField.setText(rs.getString("start").substring(0, 19));
-                //endField.setText(rs.getString("end").substring(0, 19));
             }
-        
         } catch (Exception e) {
             e.printStackTrace();
         }

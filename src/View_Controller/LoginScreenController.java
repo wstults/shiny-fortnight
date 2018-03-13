@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Logging;
 import Model.LoginException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,6 +19,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.util.logging.*;
+import javafx.scene.control.PasswordField;
+
+
 
 public class LoginScreenController {
     
@@ -43,14 +48,12 @@ public class LoginScreenController {
     private TextField usernameField;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
     
-    
-
     @FXML
     void handleExit(ActionEvent event) {
+        // Clicking Exit ends the application
         exit();
-
     }
 
     @FXML
@@ -58,7 +61,6 @@ public class LoginScreenController {
         // JDBC driver name and database URL
         final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
         final String DB_URL = "jdbc:mysql://52.206.157.109/U046Sh";
-
         //  Database credentials
         final String DBUSER = "U046Sh";
         final String DBPASS = "53688167321";
@@ -69,10 +71,9 @@ public class LoginScreenController {
             ResultSet rs = null;
             Statement stmt = null;
             try {
+                // Check to see if the user exists in the database
                 String sql = "SELECT * FROM user WHERE userName = '" + usernameField.getText() + "'";
-                
                 stmt = conn.createStatement();
-                
                 rs = stmt.executeQuery(sql);
                 if (rs.next() == false) {
                     throw new LoginException();
@@ -80,30 +81,35 @@ public class LoginScreenController {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            
             try {
+                // Retrieve the password for the user attempting to log in
                 String sql = "SELECT password FROM user WHERE userName = '" + usernameField.getText() + "'";
-                
                 stmt = conn.createStatement();
-                
                 rs = stmt.executeQuery(sql);
-                
                 while (rs.next()) {
                     String password = rs.getString("password");
-                    
-                
-                if (password.equals(passwordField.getText())) {
-                    currentUser = usernameField.getText();
-                    Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
-                    Scene appointmentsViewScene = new Scene(appointmentsViewParent);
-                    Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    appointmentsViewStage.setScene(appointmentsViewScene);
-                    appointmentsViewStage.show();
-                } else {
-                    throw new LoginException();
+                    // Check to see if the password matches    
+                    if (password.equals(passwordField.getText())) {
+                        // Assign the user logging in to a variable
+                        currentUser = usernameField.getText();
+                        try {
+                            // Record the login in the log
+                            Logging mylog = new Logging("log.txt");
+                            mylog.logger.setLevel(Level.INFO);
+                            mylog.logger.info(currentUser + " logged in.");
+                        } catch (SecurityException | IOException ex) {
+                            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        // Display the Appointments View
+                        Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("AppointmentsView.fxml"));
+                        Scene appointmentsViewScene = new Scene(appointmentsViewParent);
+                        Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        appointmentsViewStage.setScene(appointmentsViewScene);
+                        appointmentsViewStage.show();
+                    } else {
+                        throw new LoginException();
+                    }
                 }
-                }
-                
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -112,7 +118,5 @@ public class LoginScreenController {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
     }
-
 }

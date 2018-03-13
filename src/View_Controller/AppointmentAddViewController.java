@@ -59,61 +59,19 @@ public class AppointmentAddViewController {
 
     @FXML
     void handleCancel(ActionEvent event) throws IOException {
-        Parent appointmentsViewParent = FXMLLoader.load(getClass().getResource("CustomerView.fxml"));
-        Scene appointmentsViewScene = new Scene(appointmentsViewParent);
-        Stage appointmentsViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appointmentsViewStage.setScene(appointmentsViewScene);
-        appointmentsViewStage.show();
-
-    }
-
-    /*@FXML
-    void handleSave(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
-        objDbClass = new Database();
-        con = objDbClass.getConnection();
-        PreparedStatement ps;
-        try {
-            
-            Timestamp stamp = DateAndTime.getTimestamp();
-            String customerID = customerIDField.getText();
-            String title = titleField.getText();
-            String type = typeField.getText();
-            String location = locationField.getText();
-            String start = startField.getText();
-            String end = endField.getText();
-            String sql = "INSERT INTO appointment (customerId, title, description, location, contact, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy) "
-                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            ps = con.prepareStatement(sql);
-            ps.setString(1, customerID);
-            ps.setString(2, title);
-            ps.setString(3, type);
-            ps.setString(4, location);
-            ps.setString(5, LoginScreenController.currentUser);
-            ps.setString(6, "none");
-            ps.setString(7, start);
-            ps.setString(8, end);
-            ps.setTimestamp(9, stamp);
-            ps.setString(10, LoginScreenController.currentUser);
-            ps.setTimestamp(11, stamp);
-            ps.setString(12, LoginScreenController.currentUser);
-            ps.executeUpdate();
-
-        } catch (SQLException ex){
-            ex.printStackTrace();
-        }
+        // Pressing Cancel returns the user to the CustomerView
         Parent customerViewParent = FXMLLoader.load(getClass().getResource("CustomerView.fxml"));
         Scene customerViewScene = new Scene(customerViewParent);
         Stage customerViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         customerViewStage.setScene(customerViewScene);
         customerViewStage.show();
+    }
 
-    }*/
-    
     @FXML
     private void initialize() throws ClassNotFoundException, SQLException {
         objDbClass = new Database();
         con = objDbClass.getConnection();
+        // Retrieves customerid and customerName from the DB to populate the form
         try {
             String SQL = "SELECT customerid, customerName FROM customer WHERE customerid = '" + CustomerViewController.selectedCustomerID + "'";
             ResultSet rs = con.createStatement().executeQuery(SQL);
@@ -124,10 +82,10 @@ public class AppointmentAddViewController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // Lambda expression to handle Save button press
         saveButton.setOnAction((event) -> {
             PreparedStatement ps;
             try {
-            
                 Timestamp stamp = DateAndTime.getTimestamp();
                 String customerID = customerIDField.getText();
                 String title = titleField.getText();
@@ -135,6 +93,7 @@ public class AppointmentAddViewController {
                 String location = locationField.getText();
                 String start = startField.getText();
                 String end = endField.getText();
+                // Checking for blank fields
                 if (ErrorCheck.nullCheck(title) == false) {
                     return;
                 }
@@ -150,14 +109,16 @@ public class AppointmentAddViewController {
                 if (ErrorCheck.nullCheck(end) == false) {
                     return;
                 }
+                // Perform necessary time conversions
                 LocalDateTime utcStart = DateAndTime.utcTime(start);
                 LocalDateTime utcEnd = DateAndTime.utcTime(end);
+                // Put appointment times through exception checks
                 ErrorCheck.officeHoursCheck(start);
                 ErrorCheck.officeHoursCheck(end);
                 ErrorCheck.overlapCheck(start, end);
+                // Create the new appointment in the database
                 String sql = "INSERT INTO appointment (customerId, title, description, location, contact, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
                 ps = con.prepareStatement(sql);
                 ps.setString(1, customerID);
                 ps.setString(2, title);
@@ -165,14 +126,16 @@ public class AppointmentAddViewController {
                 ps.setString(4, location);
                 ps.setString(5, LoginScreenController.currentUser);
                 ps.setString(6, "none");
-                ps.setString(7, utcStart.toString().substring(0, 19));
-                ps.setString(8, utcEnd.toString().substring(0, 19));
+                ps.setString(7, utcStart.toString());
+                ps.setString(8, utcEnd.toString());
                 ps.setTimestamp(9, stamp);
                 ps.setString(10, LoginScreenController.currentUser);
                 ps.setTimestamp(11, stamp);
                 ps.setString(12, LoginScreenController.currentUser);
                 ps.executeUpdate();
+                // Display pop up alert confirming successful scheduling
                 Alerts.newApptConfirmation.run();
+                // Return the user to the Customer View
                 Parent customerViewParent = FXMLLoader.load(getClass().getResource("CustomerView.fxml"));
                 Scene customerViewScene = new Scene(customerViewParent);
                 Stage customerViewStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -187,9 +150,6 @@ public class AppointmentAddViewController {
             } catch (OverlapException ex) {
                 Logger.getLogger(AppointmentAddViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-
         });
     }
-
 }

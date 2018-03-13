@@ -11,6 +11,8 @@ import javafx.scene.control.Alert;
  *
  * @author William
  */
+
+// Custom exception class for use when checking if an appointment time overlaps with another appointment
 public class OverlapException extends Exception {
     public OverlapException() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -19,5 +21,4 @@ public class OverlapException extends Exception {
         alert.setContentText("The specified start and end times overlap with an existing appointment:\nAppointment ID " + ErrorCheck.apptID + ": " + ErrorCheck.startTime + " - " + ErrorCheck.endTime);
         alert.showAndWait();
     }
-    
 }
